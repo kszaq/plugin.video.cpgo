@@ -51,7 +51,7 @@ sys.path.append(os.path.join(RESOURCES, "lib"))
 
 exlink = params.get('url', None)
 name = params.get('title', None)
-opisy = params.get('plot', None)
+opisy = params.get('plot', '{\'title\': \'\', \'plot\': \'\'}')
 offse = params.get('page', None)
 rys = params.get('image', None)
 
