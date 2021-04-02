@@ -68,6 +68,8 @@ stoken = addon.getSetting('sesstoken')
 sexpir = addon.getSetting('sessexpir')
 skey = addon.getSetting('sesskey')
 
+file_name = addon.getSetting('fname')
+path = addon.getSetting('path')
 
 def build_url(query):
     return base_url + '?' + urlencode(query)
@@ -493,8 +495,7 @@ def home():
             FANART=FANART)
     xbmcplugin.endOfDirectory(addon_handle)
 
-
-def tvmain():
+def channels():
     headers = {
         'Host': 'b2c.redefine.pl',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36',
@@ -561,7 +562,11 @@ def tvmain():
     addon.setSetting('kanaly', str(dupes))
 
     dups = getEpgs()
-    items = filter
+    return filter
+
+
+def tvmain():
+    items = channels()
     itemz = len(items)
     for item in items:
         try:
@@ -1043,11 +1048,33 @@ def getHmac(dane):
     return bb
 
 
+def generate_m3u():
+    # Skopiowanko z plugin.video.pilot.wp by c0d34fun
+    if file_name == '' or path == '':
+        xbmcgui.Dialog().notification('CP Go', 'Ustaw nazwę pliku oraz katalog docelowy', xbmcgui.NOTIFICATION_ERROR)
+        return
+
+    xbmcgui.Dialog().notification('CP Go', 'Generuję listę M3U', xbmcgui.NOTIFICATION_INFO)
+    data = '#EXTM3U\n'
+
+    for item in channels():
+        id = item.get('id', None)
+        title = item.get('title', '').decode('utf-8')
+        data += '#EXTINF:-1,%s\nplugin://plugin.video.cpgo?mode=playCPGO&url=%s\n' % (title, id)
+
+    f = xbmcvfs.File(path + file_name, 'w')
+    f.write(data)
+    f.close()
+
+    xbmcgui.Dialog().notification('CP Go', 'Wygenerowano listę M3U', xbmcgui.NOTIFICATION_INFO)
+
+
 if __name__ == '__main__':
     mode = params.get('mode', None)
     if mode is None:
         home()
-
+    elif mode == 'BUILD_M3U':
+        generate_m3u()
     elif mode == 'playCPGO':
         playCPGO(exlink)
     elif mode == 'tvcpgo':
