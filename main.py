@@ -145,8 +145,7 @@ def PlayPolsat(stream_url, data):
             'inputstream.adaptive.license_flags',
             "persistent_storage")
 
-    Player = xbmc.Player()
-    Player.play(stream_url, play_item)
+    xbmcplugin.setResolvedUrl(addon_handle, True, listitem=play_item)
 
 
 def checkAccess(id):
@@ -358,9 +357,7 @@ def PlayPolsatPseudo(str_url):
                       'fanart': FANART})
 
     play_item.setContentLookup(False)
-    play_item.setProperty("IsPlayable", "true")
-    Player = xbmc.Player()
-    Player.play(str_url, play_item)
+    xbmcplugin.setResolvedUrl(addon_handle, True, listitem=play_item)
 
 
 def loginCPgo():
@@ -577,7 +574,7 @@ def tvmain():
             mode='playCPGO',
             image=item.get('img'),
             folder=False,
-            isPlayable=False,
+            isPlayable=True,
             infoLabels={
                 'title': item.get('title'),
                 'plot': opis},
@@ -946,7 +943,7 @@ def vodList(id):
     #
     mud = 'playVOD'
     folder = False
-    isplay = False
+    isplay = True
 
     aa = response['result']['results']
     if 'keyCategoryId' in aa[0]:
