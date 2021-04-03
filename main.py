@@ -561,13 +561,15 @@ def channels():
 
     addon.setSetting('kanaly', str(dupes))
 
-    dups = getEpgs()
     return filter
 
 
 def tvmain():
     items = channels()
     itemz = len(items)
+
+    dups = getEpgs()
+
     for item in items:
         try:
             opis = dups[0][item.get('id')]
