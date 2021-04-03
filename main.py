@@ -51,7 +51,6 @@ sys.path.append(os.path.join(RESOURCES, "lib"))
 
 exlink = params.get('url', None)
 name = params.get('title', None)
-opisy = params.get('plot', '{\'title\': \'\', \'plot\': \'\'}')
 offse = params.get('page', None)
 rys = params.get('image', None)
 
@@ -97,7 +96,7 @@ def add_item(url, name, image, folder, mode, isPlayable=True,
     xbmcplugin.addDirectoryItem(
         handle=addon_handle,
         url=build_url({'title': name, 'mode': mode, 'url': url,
-                      'page': page, 'plot': infoLabels, 'image': image}),
+                      'page': page, 'image': image}),
         listitem=list_item,
         isFolder=folder)
 
@@ -111,15 +110,8 @@ def PlayPolsat(stream_url, data):
     is_helper = inputstreamhelper.Helper(PROTOCOL, drm=DRM)
 
     UAcp = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.9 Safari/537.36'
-    dane = eval(opisy)
     if is_helper.check_inputstream():
         play_item = xbmcgui.ListItem(path=stream_url)
-        play_item.setInfo(
-            type="Video",
-            infoLabels={
-                "title": dane['title'],
-                'plot': dane['plot']})
-
         play_item.setArt({'thumb': rys, 'poster': rys,
                          'banner': rys, 'fanart': FANART})
 
@@ -345,18 +337,7 @@ def playCPGO(id, cpid=0):
 
 
 def PlayPolsatPseudo(str_url):
-    dane = eval(opisy)
     play_item = xbmcgui.ListItem(path=str_url)
-    play_item.setInfo(
-        type="Video",
-        infoLabels={
-            "title": dane['title'],
-            'plot': dane['plot']})
-
-    play_item.setArt({'thumb': dane['img'],
-                      'poster': dane['img'],
-                      'banner': dane['img'],
-                      'fanart': FANART})
 
     play_item.setContentLookup(False)
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem=play_item)
