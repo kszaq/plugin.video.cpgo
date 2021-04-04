@@ -1050,7 +1050,7 @@ def generate_m3u():
         data += '#EXTINF:-1,%s\nplugin://plugin.video.cpgo?mode=playCPGO&url=%s\n' % (title, id)
 
     f = xbmcvfs.File(path + file_name, 'w')
-    f.write(data)
+    f.write(data.encode('utf-8'))
     f.close()
 
     xbmcgui.Dialog().notification('CP Go', 'Wygenerowano listę M3U', xbmcgui.NOTIFICATION_INFO)
