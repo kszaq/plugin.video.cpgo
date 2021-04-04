@@ -1032,6 +1032,10 @@ def getHmac(dane):
 
 
 def generate_m3u():
+    if not loginCPgo():
+        xbmcgui.Dialog().notification('CP Go', 'Przed wygenerowaniem listy należy się zalogować!', xbmcgui.NOTIFICATION_ERROR)
+        return
+        
     # Skopiowanko z plugin.video.pilot.wp by c0d34fun
     if file_name == '' or path == '':
         xbmcgui.Dialog().notification('CP Go', 'Ustaw nazwę pliku oraz katalog docelowy', xbmcgui.NOTIFICATION_ERROR)
