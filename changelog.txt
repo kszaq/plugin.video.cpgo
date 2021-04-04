@@ -1,0 +1,10 @@
+1.5.2:
+- sprawdzanie zalogowania przed wygenerowaniem listy m3u
+
+1.5.1:
+- generowanie listy m3u (kod pozyczony z WP Pilot od c0d34fun)
+- szybszy start streamów
+- zastosowanie autopep8 na kodzie
+
+1.5:
+- import wtyczki od mbebe
