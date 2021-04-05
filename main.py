@@ -1047,7 +1047,8 @@ def generate_m3u():
     for item in channels():
         id = item.get('id', None)
         title = item.get('title', '').decode('utf-8')
-        data += '#EXTINF:-1,%s\nplugin://plugin.video.cpgo?mode=playCPGO&url=%s\n' % (title, id)
+        img = item.get('img', '').decode('utf-8')
+        data += '#EXTINF:-1 tvg-logo="%s",%s\nplugin://plugin.video.cpgo?mode=playCPGO&url=%s\n' % (img, title, id)
 
     f = xbmcvfs.File(path + file_name, 'w')
     f.write(data.encode('utf-8'))
